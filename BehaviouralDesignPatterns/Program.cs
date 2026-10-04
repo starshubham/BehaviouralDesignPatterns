@@ -1,5 +1,7 @@
-﻿
-using BehaviouralDesignPatterns.ChainOfResponsibility;
+﻿using BehaviouralDesignPatterns.ChainOfResponsibility;
+using BehaviouralDesignPatterns.Command;
+using BehaviouralDesignPatterns.Interpreter;
+using BehaviouralDesignPatterns.Iterator;
 
 namespace BehaviouralDesignPatterns
 {
@@ -15,6 +17,9 @@ namespace BehaviouralDesignPatterns
                 Console.WriteLine("       BEHAVIOURAL DESIGN PATTERNS");
                 Console.WriteLine("==============================================");
                 Console.WriteLine("1. Chain of Responsibility");
+                Console.WriteLine("2. Command");
+                Console.WriteLine("3. Interpreter");
+                Console.WriteLine("4. Iterator");
 
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("==============================================");
@@ -28,6 +33,18 @@ namespace BehaviouralDesignPatterns
                 {
                     case "1":
                         ChainOfResponsibilityDemo();
+                        break;
+
+                    case "2":
+                        CommandDemo();
+                        break;
+
+                    case "3":
+                        InterpreterDemo();
+                        break;
+
+                    case "4":
+                        IteratorDemo();
                         break;
 
                     case "0":
@@ -64,6 +81,88 @@ namespace BehaviouralDesignPatterns
             else
             {
                 Console.WriteLine("Invalid number.");
+            }
+
+            Pause();
+        }
+
+        static void CommandDemo()
+        {
+            Console.WriteLine("==============================================");
+            Console.WriteLine("             COMMAND PATTERN");
+            Console.WriteLine("==============================================");
+
+            Light light = new Light();
+
+            ICommand turnOnCommand = new TurnOnCommand(light);
+            ICommand turnOffCommand = new TurnOffCommand(light);
+
+            RemoteControl remote = new RemoteControl();
+
+            Console.WriteLine("Executing Turn ON command...");
+            remote.SetCommand(turnOnCommand);
+            remote.PressButton();
+
+            Console.WriteLine();
+
+            Console.WriteLine("Executing Turn OFF command...");
+            remote.SetCommand(turnOffCommand);
+            remote.PressButton();
+
+            Console.WriteLine();
+
+            Console.WriteLine("Executing Undo...");
+            remote.PressUndo();
+
+            Pause();
+        }
+
+        static void InterpreterDemo()
+        {
+            Console.WriteLine("==============================================");
+            Console.WriteLine("           INTERPRETER PATTERN");
+            Console.WriteLine("==============================================");
+
+            IExpression adminExpression = new TerminalExpression("Admin");
+
+            IExpression managerExpression = new TerminalExpression("Manager");
+
+            IExpression andExpression = new AndExpression(adminExpression, managerExpression);
+
+            string context = "Admin Manager";
+
+            Console.WriteLine($"Context: {context}");
+            Console.WriteLine("Expression: Admin AND Manager AND Director");
+
+            Console.WriteLine($"Result: {andExpression.Interpret(context)}");
+
+            Console.WriteLine();
+
+            IExpression orExpression = new OrExpression(adminExpression, managerExpression);
+
+            context = "Admin1";
+
+            Console.WriteLine($"Context: {context}");
+            Console.WriteLine("Expression: Admin OR Manager");
+
+            Console.WriteLine($"Result: {orExpression.Interpret(context)}");
+
+            Pause();
+        }
+
+        static void IteratorDemo()
+        {
+            Console.WriteLine("==============================================");
+            Console.WriteLine("             ITERATOR PATTERN");
+            Console.WriteLine("==============================================");
+
+            EmployeeCollection employees = new EmployeeCollection();
+
+            Console.WriteLine("Employees:");
+
+            foreach (string employee in employees)
+            {
+                Console.WriteLine($"- {employee}");
             }
 
             Pause();
