@@ -7,14 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Mediator\" />
-    <Folder Include="Memento\" />
-    <Folder Include="Visitor\" />
-    <Folder Include="TemplateMethod\" />
-    <Folder Include="Strategy\" />
-    <Folder Include="State\" />
-    <Folder Include="Observer\" />
-  </ItemGroup>
-
 </Project>
